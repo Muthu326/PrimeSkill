@@ -1,0 +1,201 @@
+╔══════════════════════════════════════════════════════════════╗
+║     🌐 PUBLIC URL SETUP - QUICK REFERENCE CARD              ║
+╚══════════════════════════════════════════════════════════════╝
+
+┌──────────────────────────────────────────────────────────────┐
+│ FASTEST SETUP (5 Minutes) - Using ngrok                     │
+└──────────────────────────────────────────────────────────────┘
+
+Step 1: Download ngrok
+   → Go to: https://ngrok.com/download
+   → Download Windows version
+   → Extract ngrok.exe to PrimeSkill folder
+
+Step 2: Get Free Auth Token
+   → Sign up at: https://ngrok.com (free)
+   → Dashboard → Your Authtoken → Copy
+
+Step 3: Configure ngrok (One-time)
+   → Open Command Prompt in PrimeSkill folder
+   → Run: ngrok config add-authtoken YOUR_TOKEN_HERE
+
+Step 4: Start Local Server
+   → Double-click: START_VIEWER_SERVER.bat
+   → Leave it running!
+
+Step 5: Create Public URL
+   → Open new Command Prompt
+   → Run: ngrok http 8080
+   → Copy the HTTPS URL shown
+
+Step 6: Share Full URL
+   Your public URL:
+   https://abc123.ngrok-free.app/static/scan_viewer.html
+   
+   ✅ Share this URL with anyone!
+   ✅ Works from anywhere in the world
+   ✅ No VPN needed
+
+┌──────────────────────────────────────────────────────────────┐
+│ ALTERNATIVE: Cloudflare (No Account Needed)                 │
+└──────────────────────────────────────────────────────────────┘
+
+Step 1: Download cloudflared
+   → https://github.com/cloudflare/cloudflared/releases
+   → Download cloudflared-windows-amd64.exe
+   → Rename to: cloudflared.exe
+   → Move to PrimeSkill folder
+
+Step 2: Start Local Server
+   → Double-click: START_VIEWER_SERVER.bat
+
+Step 3: Create Tunnel
+   → Run: cloudflared tunnel --url http://localhost:8080
+   → Copy the URL shown
+
+Step 4: Share
+   Your URL: https://xyz.trycloudflare.com/static/scan_viewer.html
+
+┌──────────────────────────────────────────────────────────────┐
+│ ACCESS URLs COMPARISON                                       │
+└──────────────────────────────────────────────────────────────┘
+
+LOCAL ONLY (Your PC only):
+   file:///C:/Users/.../PrimeSkill/static/scan_viewer.html
+   ❌ Only works on your computer
+
+NETWORK (Same WiFi):
+   http://192.168.1.100:8080/static/scan_viewer.html
+   ✅ Anyone on your WiFi
+   ❌ Not from internet
+
+PUBLIC (Anywhere in world):
+   https://abc123.ngrok-free.app/static/scan_viewer.html
+   ✅ Anyone, anywhere
+   ✅ Mobile, other networks
+   ✅ No VPN needed
+
+┌──────────────────────────────────────────────────────────────┐
+│ COMMON ISSUES & FIXES                                        │
+└──────────────────────────────────────────────────────────────┘
+
+Issue: URL shows "Unable to connect"
+Fix: Make sure START_VIEWER_SERVER.bat is running
+
+Issue: ngrok shows "command not found"
+Fix: Run ngrok from PrimeSkill folder, not other location
+
+Issue: Page loads but no data
+Fix: Make sure Streamlit app ran at least once to create cache
+
+Issue: URL expired/changed
+Fix: Free ngrok URLs change each restart
+     - Pay $8/month for permanent URL
+     - OR restart ngrok and share new URL
+
+┌──────────────────────────────────────────────────────────────┐
+│ WHAT RUNS WHERE                                              │
+└──────────────────────────────────────────────────────────────┘
+
+Terminal/Window 1:
+   START_VIEWER_SERVER.bat
+   → Serves files on port 8080
+   → MUST stay running
+
+Terminal/Window 2 (for public URL):
+   ngrok http 8080
+   → Creates public tunnel
+   → MUST stay running
+
+Optional: Terminal/Window 3:
+   START_FULL_ENGINE.bat
+   → Runs Streamlit app (generates data)
+   → Can stop after scan completes
+
+┌──────────────────────────────────────────────────────────────┐
+│ COST COMPARISON                                              │
+└──────────────────────────────────────────────────────────────┘
+
+Local Server (Python):
+   💰 FREE
+   ⏱️ Always
+
+ngrok Free:
+   💰 FREE
+   ⏱️ Forever
+   ⚠️ URL changes each restart
+   ⚠️ 40 connections/minute limit
+
+ngrok Paid:
+   💰 $8/month
+   ⏱️ Static URL (never changes)
+   ⏱️ 500 connections/minute
+   ⏱️ Custom domain support
+
+cloudflared:
+   💰 FREE
+   ⏱️ Forever
+   ⚠️ URL changes each restart
+
+Streamlit Cloud:
+   💰 FREE
+   ⏱️ Permanent URL
+   ⚠️ Full app only (not Quick Viewer)
+
+┌──────────────────────────────────────────────────────────────┐
+│ RECOMMENDED SETUP                                            │
+└──────────────────────────────────────────────────────────────┘
+
+For Personal Use (Phone/Mobile):
+   ✅ Use: ngrok free
+   📱 Share URL with yourself via WhatsApp
+   ⏱️ Restart URL when needed
+
+For Team Sharing:
+   ✅ Use: ngrok paid ($8/month)
+   🔗 Static URL, easy to remember
+   📌 Bookmark on all devices
+
+For Demo/Testing:
+   ✅ Use: cloudflared
+   🚀 No account, instant URL
+   ⏱️ One-time use
+
+┌──────────────────────────────────────────────────────────────┐
+│ COMPLETE EXAMPLE                                             │
+└──────────────────────────────────────────────────────────────┘
+
+Scenario: Share scans with phone while at work
+
+1. Morning: Start everything
+   - Run: START_FULL_ENGINE.bat (scan markets)
+   - Run: START_VIEWER_SERVER.bat (start server)
+   - Run: ngrok http 8080 (get public URL)
+
+2. Copy public URL
+   https://abc123.ngrok-free.app/static/scan_viewer.html
+
+3. Send to your phone (WhatsApp/Telegram)
+
+4. Open on phone
+   ✅ View live market picks
+   ✅ Auto-refreshes every 30 seconds
+   ✅ No Streamlit needed
+
+5. End of day: Close all windows
+   Tomorrow: Repeat (new ngrok URL each day)
+
+   OR: Pay $8/month for permanent URL!
+
+╔══════════════════════════════════════════════════════════════╗
+║  📚 For detailed guide, see: DEPLOY_QUICK_VIEWER.md         ║
+╚══════════════════════════════════════════════════════════════╝
+
+🚀 Quick Commands:
+
+Start Server:      START_VIEWER_SERVER.bat
+Create Public URL: ngrok http 8080
+Setup Guide:       SETUP_PUBLIC_URL.bat
+Full Guide:        DEPLOY_QUICK_VIEWER.md
+
+💡 Pro Tip: Keep both server and ngrok running together!

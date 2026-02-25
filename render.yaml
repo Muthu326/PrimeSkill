@@ -1,0 +1,36 @@
+services:
+  # 1. Frontend Streamlit Dashboard
+  - type: web
+    name: prime-skill-terminal
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: streamlit run marsh_muthu_326_pro_terminal.py
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.10.0
+      - fromGroup: prime-skill-secrets
+
+  # 2. Backend Institutional Scanner (Worker)
+  - type: worker
+    name: prime-skill-scanner
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python main.py
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.10.0
+      - fromGroup: prime-skill-secrets
+
+envVarGroups:
+  - name: prime-skill-secrets
+    envVars:
+      - key: UPSTOX_API_KEY
+        sync: false
+      - key: UPSTOX_SECRET_KEY
+        sync: false
+      - key: TELEGRAM_TOKEN
+        sync: false
+      - key: TELEGRAM_CHAT_ID
+        sync: false
+      - key: TEST_MODE
+        value: "false"

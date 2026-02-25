@@ -1,0 +1,121 @@
+================================================================================
+          FREE WEBSITE DEPLOYMENT - Real-Time Trading Dashboard
+                    Prime Skill Development | Marsh Muthu 326
+================================================================================
+
+You have TWO options to create a FREE website with real-time synchronization:
+
+================================================================================
+OPTION 1: STREAMLIT CLOUD (RECOMMENDED FOR FULL APP)
+================================================================================
+
+✅ Best for: Complete trading terminal with all features
+✅ Cost: 100% FREE
+✅ Real-time: YES (auto-updates every 5 minutes or on-demand)
+✅ Access: Worldwide via public URL
+✅ URL: https://YOUR_APP_NAME.streamlit.app
+
+HOW TO DEPLOY:
+1. Double-click: DEPLOY_TO_STREAMLIT.bat
+2. Follow the on-screen instructions
+3. Your app will be live in 2-3 minutes!
+
+WHAT YOU GET:
+- Full Streamlit dashboard with all 14 sections
+- Real-time market data and scanning
+- Automatic Telegram alerts
+- All charts, indicators, and strategies
+- Professional UI with dark theme
+
+UPDATES:
+- To update your website, just run: QUICK_DEPLOY.bat
+- Streamlit Cloud auto-deploys changes in 1-2 minutes
+
+================================================================================
+OPTION 2: QUICK VIEWER (RECOMMENDED FOR FAST ACCESS)
+================================================================================
+
+✅ Best for: Lightning-fast scan results viewing
+✅ Cost: 100% FREE
+✅ Real-time: YES (updates every 30 seconds)
+✅ Access: Worldwide via ngrok/cloudflared
+✅ URL: Dynamic (changes each session unless paid)
+
+HOW TO DEPLOY:
+1. Run: START_VIEWER_SERVER.bat (keep it running)
+2. In another window, run ONE of these:
+   
+   FOR NGROK (requires free signup):
+   - Download from: https://ngrok.com/download
+   - Run: ngrok http 8080
+   - Your URL: https://abc123.ngrok-free.app/static/scan_viewer.html
+   
+   FOR CLOUDFLARED (no signup needed):
+   - Download from: https://github.com/cloudflare/cloudflared/releases
+   - Run: cloudflared tunnel --url http://localhost:8080
+   - Your URL: https://xyz.trycloudflare.com/static/scan_viewer.html
+
+3. Share the URL with anyone!
+
+WHAT YOU GET:
+- Ultra-fast loading (instant)
+- Clean, mobile-friendly interface
+- Diamond picks, top picks, and best calls
+- Quality tier indicators (💎, 🏆, ⭐, ⚡)
+- Real-time sync (30-second auto-refresh)
+- Works on phones, tablets, computers
+
+================================================================================
+COMPARISON: WHICH ONE SHOULD YOU USE?
+================================================================================
+
+USE STREAMLIT CLOUD IF:
+✓ You want the complete trading terminal
+✓ You want a permanent public URL
+✓ You want all features (charts, strategies, etc.)
+✓ You're okay with 2-5 second load times
+✓ You want set-and-forget deployment
+
+USE QUICK VIEWER IF:
+✓ You want instant page loads (milliseconds)
+✓ You only need scan results
+✓ You want mobile-optimized viewing
+✓ You're okay with running local server
+✓ You don't mind URL changing (unless paid)
+
+================================================================================
+BEST SOLUTION: USE BOTH!
+================================================================================
+
+1. Deploy FULL APP to Streamlit Cloud for complete features
+   → Run: DEPLOY_TO_STREAMLIT.bat
+
+2. Run QUICK VIEWER locally for instant access to scan results
+   → Run: START_VIEWER_SERVER.bat
+
+3. For public Quick Viewer access:
+   → Use ngrok or cloudflared (see DEPLOY_QUICK_VIEWER.md)
+
+================================================================================
+NEED HELP?
+================================================================================
+
+✅ For Streamlit Cloud deployment:
+   - Read: DEPLOYMENT_GUIDE_STREAMLIT.md
+   - Run: DEPLOY_TO_STREAMLIT.bat
+
+✅ For Quick Viewer setup:
+   - Read: DEPLOY_QUICK_VIEWER.md
+   - Run: START_VIEWER_SERVER.bat
+
+✅ For Telegram setup:
+   - Edit your .env file with bot token and chat ID
+
+================================================================================
+YOUR TELEGRAM ALERTS WILL WORK ON BOTH OPTIONS! 🚀
+================================================================================
+
+All alerts with quality tiers (💎 DIAMOND, 🏆 TOP PICK, ⭐ BEST CALL, ⚡ GOOD CHANCE)
+will continue to be sent to your Telegram regardless of which website option you use.
+
+================================================================================

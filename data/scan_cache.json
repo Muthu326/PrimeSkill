@@ -1,0 +1,125 @@
+{
+  "last_update": "2026-02-25 17:17:51",
+  "scan_data": [
+    {
+      "symbol": "NTPC",
+      "type": "CE",
+      "strike": 380,
+      "spot": 385.1,
+      "premium": 7.702000000000001,
+      "target": 8.86,
+      "stop_loss": 6.93,
+      "score": 100,
+      "tag": "🚀 INSTITUTIONAL"
+    },
+    {
+      "symbol": "DRREDDY",
+      "type": "CE",
+      "strike": 1300,
+      "spot": 1305.8,
+      "premium": 51.65,
+      "target": 59.41,
+      "stop_loss": 46.48,
+      "score": 100,
+      "tag": "🔄 Stock Reversal Confirmed",
+      "expiry": "2026-04-28",
+      "generated_at": "2026-02-25 15:02:25",
+      "target_window": "Intraday (By 3:15 PM)",
+      "option_key": "NSE_FO|106549"
+    },
+    {
+      "symbol": "JSWSTEEL",
+      "type": "CE",
+      "strike": 1260,
+      "spot": 1274.4,
+      "premium": 65.0,
+      "target": 74.75,
+      "stop_loss": 58.5,
+      "score": 100,
+      "tag": "🔄 Stock Reversal Confirmed",
+      "expiry": "2026-04-28",
+      "generated_at": "2026-02-25 15:02:31",
+      "target_window": "Intraday (By 3:15 PM)",
+      "option_key": "NSE_FO|131777"
+    },
+    {
+      "symbol": "ADANIPORTS",
+      "type": "CE",
+      "strike": 1550,
+      "spot": 1556.2,
+      "premium": 31.124000000000002,
+      "target": 35.8,
+      "stop_loss": 28.01,
+      "score": 90,
+      "tag": "🚀 INSTITUTIONAL"
+    },
+    {
+      "symbol": "TITAN",
+      "type": "CE",
+      "strike": 4330,
+      "spot": 4342.0,
+      "premium": 86.84,
+      "target": 99.86,
+      "stop_loss": 78.16,
+      "score": 90,
+      "tag": "🚀 INSTITUTIONAL"
+    },
+    {
+      "symbol": "BRITANNIA",
+      "type": "CE",
+      "strike": 6170,
+      "spot": 6185.0,
+      "premium": 123.7,
+      "target": 142.25,
+      "stop_loss": 111.33,
+      "score": 85,
+      "tag": "🚀 INSTITUTIONAL"
+    },
+    {
+      "symbol": "HDFCLIFE",
+      "type": "CE",
+      "strike": 730,
+      "spot": 737.55,
+      "premium": 14.751,
+      "target": 16.96,
+      "stop_loss": 13.28,
+      "score": 85,
+      "tag": "🚀 INSTITUTIONAL"
+    },
+    {
+      "symbol": "GRASIM",
+      "type": "CE",
+      "strike": 2890,
+      "spot": 2895.6,
+      "premium": 57.912,
+      "target": 66.6,
+      "stop_loss": 52.12,
+      "score": 80,
+      "tag": "🚀 INSTITUTIONAL"
+    },
+    {
+      "symbol": "HEROMOTOCO",
+      "type": "CE",
+      "strike": 5790,
+      "spot": 5798.0,
+      "premium": 115.96000000000001,
+      "target": 133.36,
+      "stop_loss": 104.36,
+      "score": 80,
+      "tag": "🚀 INSTITUTIONAL"
+    },
+    {
+      "symbol": "TATASTEEL",
+      "type": "CE",
+      "strike": 210,
+      "spot": 216.39,
+      "premium": 4.3278,
+      "target": 4.97,
+      "stop_loss": 3.9,
+      "score": 80,
+      "tag": "🚀 INSTITUTIONAL"
+    }
+  ],
+  "index_picks": [],
+  "diamond_picks": []
+}

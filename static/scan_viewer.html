@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick Scan Viewer - Prime Skill</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0a1a;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .status-bar {
+            background: #1a1a2e;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .picks-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .pick-card {
+            background: #1a1a2e;
+            border: 2px solid #00f2ff;
+            border-radius: 10px;
+            padding: 15px;
+            transition: transform 0.2s;
+        }
+
+        .pick-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0, 242, 255, 0.3);
+        }
+
+        .diamond {
+            border-color: #ff1744;
+        }
+
+        .top-pick {
+            border-color: #ffd740;
+        }
+
+        .best-call {
+            border-color: #00e676;
+        }
+
+        .stock-name {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #00f2ff;
+            margin-bottom: 10px;
+        }
+
+        .signal {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .signal-ce {
+            background: #00e676;
+            color: #000;
+        }
+
+        .signal-pe {
+            background: #ff1744;
+            color: #fff;
+        }
+
+        .price-info {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .price-box {
+            background: rgba(0, 242, 255, 0.1);
+            padding: 8px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .price-label {
+            font-size: 0.8rem;
+            color: #aaa;
+        }
+
+        .price-value {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #00f2ff;
+        }
+
+        .confidence {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            font-size: 1.2rem;
+            color: #00f2ff;
+        }
+
+        .refresh-btn {
+            background: #00e676;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        .refresh-btn:hover {
+            background: #00ff88;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>🎯 Quick Scan Viewer</h1>
+        <p>Prime Skill Development | Ultra-Fast Market Scanner</p>
+        <p style="font-size: 0.9rem; margin-top: 5px; opacity: 0.8;">👑 CEO : MuthuKumar Krishnan</p>
+    </div>
+
+    <div class="status-bar">
+        <div>
+            <strong>📊 Last Update:</strong> <span id="lastUpdate">Loading...</span>
+        </div>
+        <div>
+            <strong>📦 Cache Age:</strong> <span id="cacheAge">--</span>
+        </div>
+        <button class="refresh-btn" onclick="loadData()">🔄 Refresh</button>
+    </div>
+
+    <h2 style="margin-bottom: 15px;">💎 Diamond & Top Picks</h2>
+    <div id="picksContainer" class="picks-container">
+        <div class="loading">⏳ Loading scan data...</div>
+    </div>
+
+    <div style="margin-top: 40px; text-align: center; border-top: 1px solid #333; padding-top: 20px;">
+        <p style="font-size: 1.1rem; color: #00f2ff; font-weight: bold;">✨ PrimeSkillDevelopment</p>
+        <p style="font-size: 0.9rem; color: #888;">Professional Trading Terminal | Strategic Execution</p>
+        <p style="margin-top: 10px; font-weight: bold;">👑 CEO : MuthuKumar Krishnan</p>
+    </div>
+
+    <script>
+        async function loadData() {
+            try {
+                const response = await fetch('../data/scan_cache.json');
+                const data = await response.json();
+
+                // Update status
+                document.getElementById('lastUpdate').textContent = data.last_update || 'Never';
+
+                // Calculate cache age
+                if (data.last_update) {
+                    const cacheTime = new Date(data.last_update);
+                    const now = new Date();
+                    const ageMinutes = Math.floor((now - cacheTime) / 60000);
+                    document.getElementById('cacheAge').textContent = ageMinutes < 1 ? 'Just now' : `${ageMinutes} min ago`;
+                }
+
+                // Display picks
+                const container = document.getElementById('picksContainer');
+                const picks = [...(data.diamond_picks || []), ...(data.index_picks || [])];
+
+                if (picks.length === 0) {
+                    container.innerHTML = '<div class="loading">No picks available yet. Run a scan first!</div>';
+                    return;
+                }
+
+                container.innerHTML = picks.map(pick => {
+                    const isCE = (pick.Signal || pick.Type || '').includes('CE');
+                    const isPE = (pick.Signal || pick.Type || '').includes('PE');
+                    const conf = pick.Conf || 50;
+                    const stockName = pick.Stock || 'Unknown';
+                    const spotPrice = pick.Price || 0;
+                    const entryPrice = pick.Entry || (spotPrice * 0.01).toFixed(2); // Fallback logic
+                    const slPrice = pick.SL || (entryPrice * 0.9).toFixed(2);
+                    const targetPrice = pick.Target || (entryPrice * 1.3).toFixed(2);
+
+                    let tier = 'best-call';
+                    let tierLabel = '⭐ BEST CALL';
+                    if (conf >= 85) {
+                        tier = 'diamond';
+                        tierLabel = '💎 DIAMOND';
+                    } else if (conf >= 75) {
+                        tier = 'top-pick';
+                        tierLabel = '🏆 TOP PICK';
+                    }
+
+                    return `
+                        <div class="pick-card ${tier}">
+                            <div style="font-size: 0.7rem; color: #888; margin-bottom: 5px;">📍 Exact Name</div>
+                            <div class="stock-name">${stockName}</div>
+                            
+                            <span class="signal ${isCE ? 'signal-ce' : 'signal-pe'}" style="width: 100%; text-align: center; font-size: 1.1rem;">
+                                ${isCE ? '🚀 BUY CALL' : isPE ? '🩸 BUY PUT' : 'SIGNAL'}
+                            </span>
+
+                            <div style="text-align: center; margin: 10px 0; background: rgba(255,255,255,0.05); padding: 5px; border-radius: 5px;">
+                                <div style="font-size: 0.75rem; color: #888;">🎯 Strike Price</div>
+                                <div style="font-size: 1.2rem; font-weight: bold; color: #ffd740;">
+                                    ${pick.Strike || 'ATM'} ${isCE ? 'CALL' : 'PUT'}
+                                </div>
+                            </div>
+                            
+                            <div class="price-info">
+                                <div class="price-box">
+                                    <div class="price-label">Spot Price</div>
+                                    <div class="price-value">₹${spotPrice.toFixed(2)}</div>
+                                </div>
+                                <div class="price-box">
+                                    <div class="price-label">Entry (BUY)</div>
+                                    <div class="price-value" style="color: #00e676;">₹${Number(entryPrice).toFixed(2)}</div>
+                                </div>
+                                <div class="price-box">
+                                    <div class="price-label">Stop Loss</div>
+                                    <div class="price-value" style="color: #ff1744;">₹${Number(slPrice).toFixed(2)}</div>
+                                </div>
+                                <div class="price-box">
+                                    <div class="price-label">Target</div>
+                                    <div class="price-value" style="color: #ffd740;">₹${Number(targetPrice).toFixed(2)}</div>
+                                </div>
+                            </div>
+                            
+                            <div class="confidence">
+                                ${tierLabel} | ${conf.toFixed(0)}% Win Chance
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+            } catch (error) {
+                document.getElementById('picksContainer').innerHTML =
+                    `<div class="loading">❌ Error loading data: ${error.message}</div>`;
+            }
+        }
+
+        // Load on page load
+        loadData();
+
+        // Auto-refresh every 30 seconds
+        setInterval(loadData, 30000);
+    </script>
+</body>
+
+</html>

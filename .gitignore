@@ -1,0 +1,87 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+ENV/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Database
+data/*.db
+data/*.sqlite
+data/*.sqlite3
+# Keep scan_cache.json for quick viewer
+!data/scan_cache.json
+
+# Logs
+*.log
+logs/
+
+# State files
+.last_pulse
+.last_sentiment
+.tg_last_send
+.alerts_sent.json
+.daily_stats.json
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+*.ipynb
+
+# Environment variables
+.env
+.env.local
+
+# Streamlit (Keep config.toml for deployment)
+.streamlit/secrets.toml
+!.streamlit/config.toml
+
+# Cache
+.cache/
+*.cache
+
+# Test coverage
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+
+# pytest
+.pytest_cache/
+
+# Temporary files
+*.tmp
+*.temp
+temp/
+tmp/
