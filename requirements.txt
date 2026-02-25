@@ -1,45 +1,13 @@
-# F&O Options Trading System - Requirements
-# Python 3.9+ required
-
-# Core Dependencies
-pandas>=2.0.0
-numpy>=1.24.0
-scipy>=1.11.0
-python-dotenv>=1.0.0
-requests>=2.31.0
+streamlit
+pandas
+numpy
+scipy
+python-dotenv
+requests
 upstox-client
 pandas_ta
-
-
-# Data Source
-yfinance>=0.2.28
-
-# Streamlit Dashboard
-streamlit>=1.28.0
-streamlit-autorefresh>=0.0.1
-
-# Charting
-plotly>=5.14.0
-
-# HTTP Requests (for Telegram)
-urllib3>=1.26.0
-
-# Automation & Scheduling
-schedule>=1.2.0
-
-# Optional but Recommended
-# NSE Data
-# nsepython>=2.0
-
-# WhatsApp Alerts (Choose one if needed)
-# twilio>=8.0.0              # Official WhatsApp Business API (Paid)
-# pywhatkit>=5.4             # Free but requires manual setup
-
-# Testing
-# pytest>=7.4.0
-# pytest-cov>=4.1.0
-
-# Code Quality
-# black>=23.0.0
-# flake8>=6.0.0
-# mypy>=1.5.0
+yfinance
+streamlit-autorefresh
+plotly
+urllib3
+schedule
