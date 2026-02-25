@@ -3,9 +3,16 @@ Black-Scholes Option Pricing and Greeks Calculator
 Institutional-quality implementation for accurate option valuation
 """
 import math
-from scipy.stats import norm
 from typing import Tuple
 from models import Greeks
+
+def norm_cdf(x: float) -> float:
+    """Cumulative distribution function for the standard normal distribution"""
+    return (1.0 + math.erf(x / math.sqrt(2.0))) / 2.0
+
+def norm_pdf(x: float) -> float:
+    """Probability density function for the standard normal distribution"""
+    return (1.0 / math.sqrt(2.0 * math.pi)) * math.exp(-0.5 * x**2)
 
 class BlackScholesCalculator:
     """
@@ -50,8 +57,8 @@ class BlackScholesCalculator:
         
         d1, d2 = cls.calculate_d1_d2(S, K, T, r, sigma, q)
         
-        call_price = (S * math.exp(-q * T) * norm.cdf(d1) - 
-                     K * math.exp(-r * T) * norm.cdf(d2))
+        call_price = (S * math.exp(-q * T) * norm_cdf(d1) - 
+                     K * math.exp(-r * T) * norm_cdf(d2))
         
         return max(0, call_price)
     
@@ -67,8 +74,8 @@ class BlackScholesCalculator:
         
         d1, d2 = cls.calculate_d1_d2(S, K, T, r, sigma, q)
         
-        put_price = (K * math.exp(-r * T) * norm.cdf(-d2) - 
-                    S * math.exp(-q * T) * norm.cdf(-d1))
+        put_price = (K * math.exp(-r * T) * norm_cdf(-d2) - 
+                    S * math.exp(-q * T) * norm_cdf(-d1))
         
         return max(0, put_price)
     
@@ -103,33 +110,33 @@ class BlackScholesCalculator:
         
         # Delta
         if option_type == "CE":
-            delta = math.exp(-q * T) * norm.cdf(d1)
+            delta = math.exp(-q * T) * norm_cdf(d1)
         else:
-            delta = -math.exp(-q * T) * norm.cdf(-d1)
+            delta = -math.exp(-q * T) * norm_cdf(-d1)
         
         # Gamma (same for both call and put)
-        gamma = (math.exp(-q * T) * norm.pdf(d1)) / (S * sigma * math.sqrt(T))
+        gamma = (math.exp(-q * T) * norm_pdf(d1)) / (S * sigma * math.sqrt(T))
         
         # Theta (time decay)
-        term1 = -(S * norm.pdf(d1) * sigma * math.exp(-q * T)) / (2 * math.sqrt(T))
+        term1 = -(S * norm_pdf(d1) * sigma * math.exp(-q * T)) / (2 * math.sqrt(T))
         
         if option_type == "CE":
-            term2 = -r * K * math.exp(-r * T) * norm.cdf(d2)
-            term3 = q * S * math.exp(-q * T) * norm.cdf(d1)
+            term2 = -r * K * math.exp(-r * T) * norm_cdf(d2)
+            term3 = q * S * math.exp(-q * T) * norm_cdf(d1)
             theta = (term1 + term2 + term3) / 365  # Daily theta
         else:
-            term2 = r * K * math.exp(-r * T) * norm.cdf(-d2)
-            term3 = -q * S * math.exp(-q * T) * norm.cdf(-d1)
+            term2 = r * K * math.exp(-r * T) * norm_cdf(-d2)
+            term3 = -q * S * math.exp(-q * T) * norm_cdf(-d1)
             theta = (term1 + term2 + term3) / 365  # Daily theta
         
         # Vega (same for both)
-        vega = (S * math.exp(-q * T) * norm.pdf(d1) * math.sqrt(T)) / 100  # Per 1% change in IV
+        vega = (S * math.exp(-q * T) * norm_pdf(d1) * math.sqrt(T)) / 100  # Per 1% change in IV
         
         # Rho
         if option_type == "CE":
-            rho = (K * T * math.exp(-r * T) * norm.cdf(d2)) / 100  # Per 1% change in rate
+            rho = (K * T * math.exp(-r * T) * norm_cdf(d2)) / 100  # Per 1% change in rate
         else:
-            rho = -(K * T * math.exp(-r * T) * norm.cdf(-d2)) / 100
+            rho = -(K * T * math.exp(-r * T) * norm_cdf(-d2)) / 100
         
         return Greeks(
             delta=round(delta, 4),
@@ -175,7 +182,7 @@ class BlackScholesCalculator:
             
             # Vega for Newton-Raphson
             d1, _ = cls.calculate_d1_d2(S, K, T, r, sigma, q)
-            vega = S * math.exp(-q * T) * norm.pdf(d1) * math.sqrt(T)
+            vega = S * math.exp(-q * T) * norm_pdf(d1) * math.sqrt(T)
             
             if vega < 0.0001:  # Avoid division by very small number
                 break

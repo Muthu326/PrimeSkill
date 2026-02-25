@@ -1,13 +1,10 @@
 streamlit
 pandas
 numpy
-scipy
 python-dotenv
 requests
 upstox-client
-pandas_ta
 yfinance
 streamlit-autorefresh
 plotly
-urllib3
 schedule

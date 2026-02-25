@@ -665,8 +665,11 @@ def get_option_chain_analysis(engine, symbol, is_3pm=False):
 
 def calculate_greeks(spot, strike, dte, volatility=0.20, r=0.07):
     """🧠 Calculate Option Greeks (Simplified for Python)"""
-    from math import log, sqrt, exp, pi
-    from scipy.stats import norm
+    from math import log, sqrt, exp, pi, erf
+    
+    def norm_cdf(x):
+        """Cumulative distribution function for the standard normal distribution"""
+        return (1.0 + erf(x / sqrt(2.0))) / 2.0
     
     if dte <= 0: return {"delta_ce": 0.5, "delta_pe": -0.5}
     
@@ -676,7 +679,7 @@ def calculate_greeks(spot, strike, dte, volatility=0.20, r=0.07):
     
     try:
         d1 = (log(S / K) + (r + volatility**2 / 2) * T) / (volatility * sqrt(T))
-        delta_ce = norm.cdf(d1)
+        delta_ce = norm_cdf(d1)
         delta_pe = delta_ce - 1.0
         return {"delta_ce": round(delta_ce, 2), "delta_pe": round(delta_pe, 2)}
     except:
