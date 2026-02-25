@@ -394,15 +394,16 @@ if sel_nav in ["🏠 HOME", "📡 RADAR"]:
     </div>
     """, unsafe_allow_html=True)
 
-    if not st.session_state['sdf_cache'].empty:
+    if 'sdf_cache' in st.session_state and not st.session_state['sdf_cache'].empty:
         sdf_side = st.session_state['sdf_cache']
-        with st.sidebar.expander("📊 MARKET STRENGTH", expanded=True):
-            bull_c = len(sdf_side[sdf_side['Signal'].str.contains('CE', na=False)])
-            bear_c = len(sdf_side[sdf_side['Signal'].str.contains('PE', na=False)])
-            bias = "BULLISH" if bull_c > bear_c * 1.5 else "BEARISH" if bear_c > bull_c * 1.5 else "NEUTRAL"
-            bias_clr = "#00e676" if bias == "BULLISH" else "#ff1744" if bias == "BEARISH" else "#ffd740"
-            st.markdown(f"""<div style="text-align:center; margin-bottom:10px;"><span style="color:#888; font-size:0.7rem;">STRATEGIC BIAS</span><br><span style="color:{bias_clr}; font-weight:900; font-size:1.2rem;">{bias}</span></div>
-            <div style="display:flex; justify-content:space-between; font-size:0.75rem; margin-bottom:12px;"><span style="color:#00e676;">📈 {bull_c} CE</span><span style="color:#ff1744;">📉 {bear_c} PE</span></div>""", unsafe_allow_html=True)
+        if 'Signal' in sdf_side.columns:
+            with st.sidebar.expander("📊 MARKET STRENGTH", expanded=True):
+                bull_c = len(sdf_side[sdf_side['Signal'].str.contains('CE', na=False)])
+                bear_c = len(sdf_side[sdf_side['Signal'].str.contains('PE', na=False)])
+                bias = "BULLISH" if bull_c > bear_c * 1.5 else "BEARISH" if bear_c > bull_c * 1.5 else "NEUTRAL"
+                bias_clr = "#00e676" if bias == "BULLISH" else "#ff1744" if bias == "BEARISH" else "#ffd740"
+                st.markdown(f"""<div style="text-align:center; margin-bottom:10px;"><span style="color:#888; font-size:0.7rem;">STRATEGIC BIAS</span><br><span style="color:{bias_clr}; font-weight:900; font-size:1.2rem;">{bias}</span></div>
+                <div style="display:flex; justify-content:space-between; font-size:0.75rem; margin-bottom:12px;"><span style="color:#00e676;">📈 {bull_c} CE</span><span style="color:#ff1744;">📉 {bear_c} PE</span></div>""", unsafe_allow_html=True)
 
 stk_list = INDEX_MAP[sel_idx]["stocks"]
 
