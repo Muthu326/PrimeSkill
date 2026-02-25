@@ -83,6 +83,49 @@ st.spinner = st_spinner_patch
 
 st.set_page_config(layout="wide", page_title="PRIME SKILL DEV | Ultimate Terminal", page_icon="🎯", initial_sidebar_state="expanded")
 
+# ==========================================
+# 🔑 SMART AUTH SYNC (Daily Token Logic)
+# ==========================================
+def handle_upstox_auth():
+    """🤝 Seamlessly syncs Upstox Token from Cloud URL"""
+    from pro_config import UPSTOX_API_KEY, REDIRECT_URI
+    import requests
+    
+    # 1. Detect if Upstox just redirected us with a code
+    if "code" in st.query_params:
+        auth_code = st.query_params["code"]
+        st.sidebar.info("🔄 Syncing fresh Upstox Session...")
+        
+        # 2. Exchange Code for Access Token
+        token_url = "https://api.upstox.com/v2/login/authorization/token"
+        payload = {
+            'code': auth_code,
+            'client_id': UPSTOX_API_KEY,
+            'client_secret': os.getenv("UPSTOX_API_SECRET"),
+            'redirect_uri': REDIRECT_URI,
+            'grant_type': 'authorization_code'
+        }
+        
+        try:
+            resp = requests.post(token_url, data=payload)
+            res_data = resp.json()
+            
+            if "access_token" in res_data:
+                # 3. Store in Session & OS Environment for the whole engine
+                new_token = res_data["access_token"]
+                st.session_state['UPSTOX_ACCESS_TOKEN'] = new_token
+                os.environ['UPSTOX_ACCESS_TOKEN'] = new_token
+                st.sidebar.success("✅ Upstox Sync Successful!")
+                # Clean URL for cleaner experience
+                st.query_params.clear()
+            else:
+                st.sidebar.error(f"❌ Sync Failed: {res_data.get('errors', [{}])[0].get('message', 'Unknown Error')}")
+        except Exception as e:
+            st.sidebar.error(f"⚠️ Auth Error: {e}")
+
+# Call auth handler early
+handle_upstox_auth()
+
 def clean_symbol_name(symbol):
     """🧹 Professional Symbol Formatter (e.g., HDFCBANK -> HDFC BANK)"""
     if not isinstance(symbol, str): return symbol
@@ -276,6 +319,17 @@ refresh_counter = st_autorefresh(interval=refresh_interval, key="datarefresh") i
 # ==========================================
 # ⏱ LIVE DATA STATUS (Sidebar)
 # ==========================================
+st.sidebar.markdown("### 🏛 Institutional Account")
+from pro_config import AUTH_URL
+st.sidebar.markdown(f"""
+    <a href="{AUTH_URL}" target="_self">
+        <button style="width:100%; height:40px; background-color:#1cffff; color:black; border:none; border-radius:5px; font-weight:bold; cursor:pointer; margin-bottom:15px;">
+            🔐 SYNC UPSTOX SESSION
+        </button>
+    </a>
+""", unsafe_allow_html=True)
+
+st.sidebar.markdown("---")
 st.sidebar.markdown("### ⏱ Live Data Engine")
 
 # Auto-refresh toggle
