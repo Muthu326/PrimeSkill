@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 from datetime import datetime
-from services.market_engine import get_friendly_name
+from utils.helpers import get_friendly_name
 
 def render_elite_fno_view(view_data):
     st.markdown("""
